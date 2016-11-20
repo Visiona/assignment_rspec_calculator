@@ -105,8 +105,12 @@ describe Calculator do
       expect(calculator.divide(0.3,0.2)).to be_within(0.01).of(1.49)
     end
 
-    it "returns quotient of two integers - an integer when there is no reminder" do
-      expect(calculator.divide(4,2)).to eq(2)
+    it "returns quotient of two integers when there is no reminder" do
+      expect(calculator.divide(4,2)).to be_kind_of(Integer)
+    end
+
+    it "returns quotient of two integers when there is a reminder" do
+      expect(calculator.divide(4,3)).to be_kind_of(Float)
     end
 
     it "raises an error if there is division by zero" do
@@ -153,43 +157,93 @@ describe Calculator do
       end.to raise_error(ArgumentError)
     end
 
-    it "returns 2-digit decimal for non-round roots" do
-      expect(calculator.sqrt(8)).to eq(2.83)
+    it "returns a decimal for non-round roots" do
+      expect(calculator.sqrt(7)).to be_kind_of(Float)
     end
 
     it "returns square root of float" do
       expect(calculator.sqrt(0.25)).to eq(0.5)
     end
+
+    it "returns 2-digit decimal for non-round roots" do
+      root = calculator.sqrt(7).to_s
+      decimal_checker = root.split(".").last.size
+      expect(decimal_checker).to eq(2)
+    end
+
   end
 
   describe "#memory=" do
-    # before do
-    #   calculator.memory = 12
-    # end
 
-    it "returns overwritten results to memory function" do
-      calculator.instance_variable_set(:@memory, 12)
-      expect(calculator.memory=(20)).to eq(20)
+    it "stores an object in memory"  do
+      calculator.memory = 2
+      expect(calculator.memory).to eq(2)
+    end
+
+    it "returns overwritten result in function memory" do
+      calculator.memory = 1
+      calculator.memory = 3
+      expect(calculator.memory).to eq(3)
     end
   end
 
   describe "#memory" do
 
-    it "returns the object in memory" do
-      calculator.instance_variable_set(:@memory, 12)
-      expect(calculator.memory).to eq(12)
+    it "returns nil if memory hasn't been set up" do
+      expect(calculator.memory).to eq(nil)
     end
 
-    it "clears memory when returned object, and starts as nil" do
-      expect(calculator.instance_variable_get(:@memory)).to eq(nil)
+    it "returns last value if memory has been set up to" do
+      calculator.memory = 1
+      expect(calculator.memory).to eq(1)
     end
+
+    it "clears memory after it has been set up and called" do
+      calculator.memory = 12
+      calculator.memory
+      expect(calculator.memory).to eq(nil)
+    end
+
   end
 
-  describe "#stringify" do
-    it "checks if the output of a function is a string" do
-      calculator.instance_variable_set(:@stringify, 2)
-      expect(calculator.output(12)).to be_a(String)
-    end
+  context "stringify set as true" do
+    let(:calc_stringify) {Calculator.new(true)}
+
+      describe "#add" do
+        it "returns a string" do
+          expect(calc_stringify.add(1,2)).to be_kind_of(String)
+        end
+      end
+
+      describe "#sunbtract" do
+        it "returns a string" do
+          expect(calc_stringify.subtract(1,2)).to be_kind_of(String)
+        end
+      end
+
+      describe "#multiply" do
+        it "returns a string" do
+          expect(calc_stringify.multiply(1,2)).to be_kind_of(String)
+        end
+      end
+
+      describe "#divide" do
+        it "returns a string" do
+          expect(calc_stringify.divide(1,2)).to be_kind_of(String)
+        end
+      end
+
+      describe "#sqrt" do
+        it "returns a string" do
+          expect(calc_stringify.sqrt(5)).to be_kind_of(String)
+        end
+      end
+
+      describe "#pow" do
+        it "returns a string" do
+          expect(calc_stringify.pow(1,2)).to be_kind_of(String)
+        end
+      end
   end
 
 end
