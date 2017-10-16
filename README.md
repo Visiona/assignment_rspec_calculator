@@ -1,7 +1,21 @@
 Dariusz Biskupski
 
-# assignment_rspec_calculator
+# Test of Calculator written in Ruby in RSpec
 
-01134
+In this assignment I built specs for an existing Ruby file - calculator.
 
-[A Ruby and RSpec testing assignment from the Viking Code School](http://www.vikingcodeschool.com)
+
+## Getting Started
+
+To run the solution tests `cd` to the project directory and `run $ rspec`. Tests are located in the `spec/calculator_spec.rb file`.
+
+
+## Authors
+
+* **Dariusz Biskupski** - *Rspec* - https://dariuszbiskupski.com
+* **Viking Code School** - *Calculator* - https://www.vikingcodeschool.com/)
+
+
+## Acknowledgments
+
+It is part of the assignment created for [Viking Code School](https://www.vikingcodeschool.com/)
